@@ -3,8 +3,10 @@
 var canvas = document.querySelector(".preview");
 var context = canvas.getContext("2d");
 
-var textarea = document.querySelector("textarea");
 var download = document.querySelector("a.download");
+var textarea = document.querySelector("textarea");
+textarea.value = textarea.value.trim();
+
 
 var bg = {
   light: "#eee",
