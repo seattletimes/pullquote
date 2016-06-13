@@ -1,0 +1,40 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link href="style.css" rel="stylesheet">
+    <title>Pullquote :: The Seattle Times</title>
+  </head>
+  <body>
+    <div class="row">
+      <textarea class="input">
+"This space intentionally left blank."
+  -- Thomas Wilburn
+      </textarea>
+      <div class="formatting">
+        <div class="setting">
+          <label for="font">Font</label>
+          <select id="font">
+            <option value="Calibri">Calibri</option>
+            <option value="Georgia">Georgia</option>
+            <option value="Helvetica">Helvetica</option>
+            <option value="sans-serif">Sans serif</option>
+            <option value="serif">Serif</option>
+            <option value="monospace">Monospaced</option>
+          </select>
+        </div>
+        <div class="setting">
+          <label for="size">Font size</label>
+          <input id="size" value="24">
+        </div>
+      </div>
+    </div>
+    <div class="preview-container">
+      <div class="preview-aspect">
+        <canvas class="preview" width=1200 height=630></canvas>
+      </div>
+    </div>
+    <a class="download" download="image.jpg"></a>
+    <script src="app.js"></script>
+  </body>
+</html>
