@@ -31,7 +31,10 @@ var getSettings = function() {
 var render = function() {
   var settings = getSettings();
   var text = textarea.value.trim();
-  text = text.replace(/"(\w)/g, "“$1").replace(/(\S)"/g, "$1”").replace(/--/g, "—");
+  text = text
+    .replace(/"(\w)/g, "“$1")
+    .replace(/(\S)"/g, "$1”")
+    .replace(/--/g, "—");
   context.clearRect(0, 0, canvas.width, canvas.height);
   //set the background color
   context.fillStyle = bg[settings.theme] || bg.light;
@@ -92,3 +95,6 @@ for (var i = 0; i < everything.length; i++) {
 }
 
 canvas.addEventListener("click", () => download.click());
+
+var bodyMutation = new MutationObserver(render);
+// bodyMutation.observe(document.body, { attributes: true });

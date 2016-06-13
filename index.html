@@ -4,6 +4,18 @@
     <meta charset="utf-8">
     <link href="style.css" rel="stylesheet">
     <title>Pullquote :: The Seattle Times</title>
+
+    <!-- typekit fonts -->
+    <script>
+    (function(d) {
+    var config = {
+      kitId: 'rvq5yyp',
+      scriptTimeout: 3000,
+      active: () => window.render ? render() : null
+    },
+    h=d.documentElement,t=setTimeout(function(){h.className=h.className.replace(/\bwf-loading\b/g,"")+" wf-inactive";},config.scriptTimeout),tk=d.createElement("script"),f=false,s=d.getElementsByTagName("script")[0],a;h.className+=" wf-loading";tk.src='//use.typekit.net/'+config.kitId+'.js';tk.async=true;tk.onload=tk.onreadystatechange=function(){a=this.readyState;if(f||a&&a!="complete"&&a!="loaded")return;f=true;clearTimeout(t);try{Typekit.load(config)}catch(e){}};s.parentNode.insertBefore(tk,s)
+    })(document);
+    </script>
   </head>
   <body>
     <div class="row">
@@ -23,6 +35,8 @@
         <div class="setting">
           <label for="font">Font</label>
           <select id="font">
+            <option value="ff-meta-serif-web-pro">Meta Serif</option>
+            <option value="ff-dagny-web-pro">Dagny</option>
             <option value="Calibri">Calibri</option>
             <option value="Georgia">Georgia</option>
             <option value="Helvetica">Helvetica</option>
