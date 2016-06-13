@@ -18,6 +18,7 @@ var getSettings = function() {
 var render = function() {
   var settings = getSettings();
   var text = textarea.value.trim();
+  text = text.replace(/"(\w)/g, "“$1").replace(/(\S)"/g, "$1”").replace(/--/g, "—");
   context.clearRect(0, 0, canvas.width, canvas.height);
   //set the background color
   switch (settings.background) {
@@ -30,7 +31,7 @@ var render = function() {
   }
   //lay out the text
   settings.size *= 1;
-  var textY = 24 + settings.size;
+  var lines = [];
   var padX = 24;
   var maxWidth = canvas.width - padX * 2;
   var position = 0;
@@ -40,31 +41,43 @@ var render = function() {
   while (position < text.length) {
     var char = text[position];
     if (char == "\n") {
-      context.fillText(buffer, padX, textY);
+      lines.push(buffer);
       position++;
       buffer = "";
-      textY += settings.size;
       continue;
     }
 
     var metric = context.measureText(buffer);
     if (metric.width > maxWidth) {
       var words = buffer.split(" ");
-      var last = words.pop();
-      context.fillText(words.join(" "), padX, textY);
-      position -= last.length + 1;
+      if (words.length > 1) {
+        var last = words.pop();
+        position -= last.length + 1;
+      } else {
+        position++;
+      }
+      lines.push(words.join(" "));
       buffer = "";
-      textY += settings.size;
     } else {
       buffer += char;
     }
     position++;
   }
   if (buffer) {
-    context.fillText(buffer, padX, textY);
+    lines.push(buffer);
   }
-  //add watermark?
-  //set the download link
+  var lineY = canvas.height / 2 + settings.size / 2 - lines.length / 2 * settings.size;
+  lines.forEach(function(l) {
+    context.fillText(l, padX, lineY);
+    lineY += settings.size;
+  });
 };
 
 render();
+
+var everything = document.querySelectorAll("input, select, textarea");
+for (var i = 0; i < everything.length; i++) {
+  var element = everything[i];
+  element.addEventListener("change", render);
+  element.addEventListener("keyup", render);
+}
