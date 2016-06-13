@@ -4,6 +4,19 @@ var canvas = document.querySelector(".preview");
 var context = canvas.getContext("2d");
 
 var textarea = document.querySelector("textarea");
+var download = document.querySelector("a.download");
+
+var bg = {
+  light: "#eee",
+  dark: "#333",
+  blue: "#88b"
+};
+
+var fg = {
+  light: "#333",
+  dark: "#eee",
+  blue: "#eee"
+};
 
 var getSettings = function() {
   var settings = {};
@@ -21,14 +34,8 @@ var render = function() {
   text = text.replace(/"(\w)/g, "“$1").replace(/(\S)"/g, "$1”").replace(/--/g, "—");
   context.clearRect(0, 0, canvas.width, canvas.height);
   //set the background color
-  switch (settings.background) {
-    case "light":
-      break;
-
-    default:
-      context.fillStyle = "#88B";
-      context.fillRect(0, 0, canvas.width, canvas.height);
-  }
+  context.fillStyle = bg[settings.theme] || bg.light;
+  context.fillRect(0, 0, canvas.width, canvas.height);
   //lay out the text
   settings.size *= 1;
   var lines = [];
@@ -36,7 +43,7 @@ var render = function() {
   var maxWidth = canvas.width - padX * 2;
   var position = 0;
   var buffer = "";
-  context.fillStyle = "white";
+  context.fillStyle = fg[settings.theme] || fg.light;
   context.font = `${settings.size}px ${settings.font}`;
   while (position < text.length) {
     var char = text[position];
@@ -71,6 +78,8 @@ var render = function() {
     context.fillText(l, padX, lineY);
     lineY += settings.size;
   });
+  var data = canvas.toDataURL();
+  download.href = data;
 };
 
 render();
@@ -81,3 +90,5 @@ for (var i = 0; i < everything.length; i++) {
   element.addEventListener("change", render);
   element.addEventListener("keyup", render);
 }
+
+canvas.addEventListener("click", () => download.click());

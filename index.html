@@ -13,6 +13,14 @@
       </textarea>
       <div class="formatting">
         <div class="setting">
+          <label for="theme">Theme</label>
+          <select id="theme">
+            <option value="light">Light</option>
+            <option value="dark">Dark</option>
+            <option value="blue">Blue</option>
+          </select>
+        </div>
+        <div class="setting">
           <label for="font">Font</label>
           <select id="font">
             <option value="Calibri">Calibri</option>
@@ -25,8 +33,9 @@
         </div>
         <div class="setting">
           <label for="size">Font size</label>
-          <input id="size" value="128">
+          <input id="size" value="72">
         </div>
+        <a class="download" download="image.jpg">Download</a>
       </div>
     </div>
     <div class="preview-container">
@@ -34,7 +43,6 @@
         <canvas class="preview" width=1200 height=630></canvas>
       </div>
     </div>
-    <a class="download" download="image.jpg"></a>
     <script src="app.js"></script>
   </body>
 </html>

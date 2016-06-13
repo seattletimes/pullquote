@@ -30,6 +30,30 @@ textarea {
   padding: 8px;
 }
 
+.formatting {
+  font-size: 16px;
+  padding: 8px;
+}
+
+.formatting .setting {
+  display: flex;
+  padding: 4px 0;
+}
+
+.setting label {
+  flex: 1 1 50%;
+  border-bottom: 1px dotted #333;
+}
+
+.setting input, .setting select {
+  width: 100px;
+  font-size: inherit;
+  border: none;
+  box-shadow: inset 4px 4px 16px rgba(0, 0, 0, .1);
+  padding: 4px;
+  text-align: center;
+}
+
 .preview-container {
   flex: 1 1 50%;
   display: flex;
