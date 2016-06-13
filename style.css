@@ -65,20 +65,26 @@ textarea {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: #333;
+  background: #888;
   padding: 24px;
 }
 
 .preview-aspect {
   width: 100%;
+  max-width: 600px;
   position: relative;
   background: #EEE;
+  box-shadow: 0 0 8px 8px rgba(0, 0, 0, .2);
 }
 
 .preview-aspect::before {
   padding-bottom: 52.3%;
   content: "";
   display: block;
+}
+
+.preview-aspect[aspect-ratio="twitter"]::before {
+  padding-bottom: 100%;
 }
 
 .preview {

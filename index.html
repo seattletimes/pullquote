@@ -25,6 +25,13 @@
       </textarea>
       <div class="formatting">
         <div class="setting">
+          <label for="aspect">Shape</label>
+          <select id="aspect">
+            <option value="facebook">Facebook</option>
+            <option value="twitter">Twitter</option>
+          </select>
+        </div>
+        <div class="setting">
           <label for="theme">Theme</label>
           <select id="theme">
             <option value="light">Light</option>
@@ -53,7 +60,7 @@
       </div>
     </div>
     <div class="preview-container">
-      <div class="preview-aspect">
+      <div class="preview-aspect" aspect-ratio="facebook">
         <canvas class="preview" width=1200 height=630></canvas>
       </div>
     </div>

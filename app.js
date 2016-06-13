@@ -7,7 +7,6 @@ var download = document.querySelector("a.download");
 var textarea = document.querySelector("textarea");
 textarea.value = textarea.value.trim();
 
-
 var bg = {
   light: "#eee",
   dark: "#333",
@@ -18,6 +17,11 @@ var fg = {
   light: "#333",
   dark: "#eee",
   blue: "#eee"
+};
+
+var sizes = {
+  facebook: [1200, 630],
+  twitter: [600, 600]
 };
 
 var getSettings = function() {
@@ -32,12 +36,17 @@ var getSettings = function() {
 
 var render = function() {
   var settings = getSettings();
+  console.log(settings);
+  document.querySelector(".preview-aspect").setAttribute("aspect-ratio", settings.aspect);
+  var size = sizes[settings.aspect];
+  canvas.width = size[0];
+  canvas.height = size[1];
+
   var text = textarea.value.trim();
   text = text
     .replace(/"(\w)/g, "“$1")
     .replace(/(\S)"/g, "$1”")
     .replace(/--/g, "—");
-  context.clearRect(0, 0, canvas.width, canvas.height);
   //set the background color
   context.fillStyle = bg[settings.theme] || bg.light;
   context.fillRect(0, 0, canvas.width, canvas.height);
