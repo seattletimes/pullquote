@@ -81,7 +81,7 @@ var layoutText = function(text, maxWidth) {
 };
 
 var loadImage = function(f) {
-  if (!f.name.match(/(jpg|jpeg|png|gif)$/)) return;
+  if (!f.name.match(/(jpg|jpeg|png|gif)$/i)) return;
   var reader = new FileReader();
   reader.onload = function() {
     console.log(`Read image: ${f.name}`);
