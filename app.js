@@ -85,23 +85,29 @@ var loadImage = function(f) {
   var reader = new FileReader();
   reader.onload = function() {
     console.log(`Read image: ${f.name}`);
-    state.image = new Image();
-    state.image.onload = render;
+    var image = state.image = new Image();
+    state.image.onload = function() {
+      var w = canvas.width;
+      var h = image.height * (w / image.width);
+      if (h < canvas.height) {
+        h = canvas.height;
+        w = image.width * (h / image.height);
+      }
+      state.width = w;
+      state.height = h;
+      state.cx = canvas.width / 2;
+      state.cy = canvas.height / 2;
+      render();
+    };
     state.image.src = reader.result;
   }
   reader.readAsDataURL(f);
 }
 
-var drawImage = function(image) {
-  var w = canvas.width;
-  var h = image.height * (w / image.width);
-  if (h < canvas.height) {
-    h = canvas.height;
-    w = image.width * (h / image.height);
-  }
-  var cx = canvas.width / 2 - w / 2;
-  var cy = canvas.height / 2 - h / 2;
-  context.drawImage(image, cx, cy, w, h);
+var drawImage = function() {
+  var x = state.cx - state.width / 2;
+  var y = state.cy - state.height / 2;
+  context.drawImage(state.image, x, y, state.width, state.height);
 };
 
 var render = function() {
@@ -142,8 +148,6 @@ var render = function() {
     context.fillText(l.text, x, lineY);
     lineY += settings.size;
   });
-  var data = canvas.toDataURL();
-  download.href = data;
 };
 
 render();
@@ -154,6 +158,12 @@ for (var i = 0; i < everything.length; i++) {
   element.addEventListener("change", render);
   element.addEventListener("keyup", render);
 };
+
+//set the download link on-demand, it's expensive
+download.addEventListener("click", function() {
+  var data = canvas.toDataURL();
+  download.href = data;
+});
 
 var cancel = function(e) { e.preventDefault() };
 
@@ -180,3 +190,30 @@ document.querySelector(".set-image").addEventListener("click", function() {
     fileInput.click();
   }
 });
+
+canvas.addEventListener("mousedown", function(e) {
+  state.coords = [e.clientX, e.clientY];
+});
+
+canvas.addEventListener("mousemove", function(e) {
+  if (!state.coords) return;
+  state.cx += e.clientX - state.coords[0];
+  state.cy += e.clientY - state.coords[1];
+  state.coords = [e.clientX, e.clientY];
+  render();
+});
+
+canvas.addEventListener("mouseup", function(e) {
+  state.coords = null;
+});
+
+canvas.addEventListener("wheel", function(e) {
+  if (!state.width) return;
+  var scale = .8;
+  if (e.deltaY > 0) {
+    scale = 1.1;
+  }
+  state.width *= scale;
+  state.height *= scale;
+  render();
+})
