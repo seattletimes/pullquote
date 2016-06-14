@@ -43,18 +43,17 @@ textarea {
   display: flex;
   padding: 4px 0;
   align-items: flex-end;
+  border-bottom: 1px dotted #333;
 }
 
 .setting label {
   flex: 1 1 50%;
-  border-bottom: 1px dotted #333;
 }
 
 .setting input, .setting select {
   width: 100px;
   font-size: inherit;
   border: none;
-  box-shadow: inset 4px 4px 16px rgba(0, 0, 0, .1);
   padding: 4px;
   text-align: center;
 }
