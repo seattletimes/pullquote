@@ -92,8 +92,16 @@ var loadImage = function(f) {
   reader.readAsDataURL(f);
 }
 
-var drawImage = function() {
-  context.drawImage(state.image, 0, 0, canvas.width, canvas.height);
+var drawImage = function(image) {
+  var w = canvas.width;
+  var h = image.height * (w / image.width);
+  if (h < canvas.height) {
+    h = canvas.height;
+    w = image.width * (h / image.height);
+  }
+  var cx = canvas.width / 2 - w / 2;
+  var cy = canvas.height / 2 - h / 2;
+  context.drawImage(image, cx, cy, w, h);
 };
 
 var render = function() {
@@ -111,7 +119,7 @@ var render = function() {
   context.fillStyle = bg[settings.theme] || bg.light;
   context.fillRect(0, 0, canvas.width, canvas.height);
   //add the image
-  if (state.image) drawImage();
+  if (state.image) drawImage(state.image);
   //lay out the text
   context.fillStyle = fg[settings.theme] || fg.light;
   context.font = `${settings.size}px ${settings.font}`;
