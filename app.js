@@ -21,7 +21,8 @@ var fg = {
 
 var sizes = {
   facebook: [1200, 630],
-  twitter: [600, 600]
+  twitter: [1024, 512],
+  instagram: [1080, 1080]
 };
 
 var getSettings = function() {
