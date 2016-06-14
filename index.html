@@ -24,20 +24,19 @@
   -- Thomas Wilburn
       </textarea>
       <div class="formatting">
-        <div class="setting">
-          <label for="aspect">Shape</label>
-          <select id="aspect">
-            <option value="facebook">Facebook</option>
-            <option value="twitter">Twitter</option>
-            <option value="instagram">Instagram</option>
-          </select>
+        <div class="setting toggle-button">
+          <input type="radio" name="aspect" value="facebook" id="facebook">
+          <label for="facebook">Facebook</label>
+          <input type="radio" name="aspect" value="twitter" id="twitter">
+          <label for="twitter">Twitter</label>
+          <input type="radio" name="aspect" value="instagram" id="instagram">
+          <label for="instagram">Instagram</label>
         </div>
-        <div class="setting">
-          <label for="theme">Theme</label>
-          <select id="theme">
-            <option value="light">Light</option>
-            <option value="dark">Dark</option>
-            <option value="blue">Blue</option>
+        <div class="setting toggle-button">
+          <input type="radio" name="theme" value="light" id="light" checked="checked">
+          <label for="light">Light</label>
+          <input type="radio" name="theme" value="dark" id="dark">
+          <label for="dark">Dark</label>
           </select>
         </div>
         <div class="setting toggle-button">
@@ -47,6 +46,25 @@
           <label for="dagny">Dagny</label>
           <input type="radio" name="font" value="monospace" id="mono">
           <label for="mono">Monospaced</label>
+        </div>
+        <div class="toggle-collection">
+          <div class="setting toggle-button">
+            <input type="radio" name="alignX" value="left" id="left" checked="checked">
+            <label for="left"><img src="ic_format_align_left_black_18px.svg"></label>
+            <input type="radio" name="alignX" value="center" id="center">
+            <label for="center"><img src="ic_format_align_center_black_18px.svg"></label>
+            <input type="radio" name="alignX" value="right" id="right">
+            <label for="right"><img src="ic_format_align_right_black_18px.svg"></label>
+          </div>
+
+          <div class="setting toggle-button">
+            <input type="radio" name="alignY" value="top" id="top">
+            <label for="top"><img src="ic_vertical_align_top_black_18px.svg"></label>
+            <input type="radio" name="alignY" value="middle" id="middle" checked="checked">
+            <label for="middle"><img src="ic_vertical_align_center_black_18px.svg"></label>
+            <input type="radio" name="alignY" value="bottom" id="bottom">
+            <label for="bottom"><img src="ic_vertical_align_bottom_black_18px.svg"></label>
+          </div>
         </div>
         <div class="setting">
           <label for="size">Font size</label>

@@ -39,7 +39,43 @@ var getSettings = function() {
   }
   settings.size *= 1;
   return settings;
-}
+};
+
+var layoutText = function(text, maxWidth) {
+  var lines = [];
+  var position = 0;
+  var buffer = "";
+  while (position < text.length) {
+    var char = text[position];
+    if (char == "\n") {
+      lines.push({ text: buffer, width: context.measureText(buffer).width });
+      position++;
+      buffer = "";
+      continue;
+    }
+
+    buffer += char;
+    var metric = context.measureText(buffer);
+    if (metric.width > maxWidth) {
+      var words = buffer.split(" ");
+      if (words.length > 1) {
+        var last = words.pop();
+        position -= last.length + 1;
+      } else {
+        position++;
+      }
+      words = words.join(" ");
+      lines.push({ text: words, width: context.measureText(words).width });
+      buffer = "";
+    }
+    position++;
+  }
+  if (buffer) {
+    lines.push({ text: buffer, width: context.measureText(buffer).width });
+  }
+  console.log(lines);
+  return lines;
+};
 
 var render = function() {
   var settings = getSettings();
@@ -57,45 +93,25 @@ var render = function() {
   context.fillStyle = bg[settings.theme] || bg.light;
   context.fillRect(0, 0, canvas.width, canvas.height);
   //lay out the text
-  settings.size *= 1;
-  var lines = [];
-  var padX = 24;
-  var maxWidth = canvas.width - padX * 2;
-  var position = 0;
-  var buffer = "";
   context.fillStyle = fg[settings.theme] || fg.light;
   context.font = `${settings.size}px ${settings.font}`;
-  while (position < text.length) {
-    var char = text[position];
-    if (char == "\n") {
-      lines.push(buffer);
-      position++;
-      buffer = "";
-      continue;
-    }
-
-    var metric = context.measureText(buffer);
-    if (metric.width > maxWidth) {
-      var words = buffer.split(" ");
-      if (words.length > 1) {
-        var last = words.pop();
-        position -= last.length + 1;
-      } else {
-        position++;
-      }
-      lines.push(words.join(" "));
-      buffer = "";
-    } else {
-      buffer += char;
-    }
-    position++;
+  var padding = 24;
+  var maxWidth = canvas.width - padding * 2;
+  var lines = layoutText(text, maxWidth);
+  var lineY = padding + canvas.height / 2 + settings.size / 2 - lines.length / 2 * settings.size;
+  if (settings.alignY == "top") {
+    lineY = padding + settings.size;
+  } else if (settings.alignY == "bottom") {
+    lineY = canvas.height - lines.length * settings.size - padding;
   }
-  if (buffer) {
-    lines.push(buffer);
-  }
-  var lineY = canvas.height / 2 + settings.size / 2 - lines.length / 2 * settings.size;
   lines.forEach(function(l) {
-    context.fillText(l, padX, lineY);
+    var x = padding;
+    if (settings.alignX == "right") {
+      x = canvas.width - l.width - padding;
+    } else if (settings.alignX == "center") {
+      x = canvas.width / 2 - l.width / 2;
+    }
+    context.fillText(l.text, x, lineY);
     lineY += settings.size;
   });
   var data = canvas.toDataURL();

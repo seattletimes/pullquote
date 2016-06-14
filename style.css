@@ -16,7 +16,7 @@ body {
 
 .row {
   display: flex;
-  flex: 1 1 50%;
+  flex: 1 1 30%;
 }
 
 .row textarea, .row .formatting {
@@ -54,11 +54,12 @@ textarea {
   width: 100px;
   font-size: inherit;
   border: none;
+  background: white;
   padding: 4px;
   text-align: center;
 }
 
-.toggle-button {
+.setting.toggle-button {
   display: flex;
   border-bottom: none;
 }
@@ -68,9 +69,11 @@ textarea {
 }
 
 .toggle-button label[for] {
-  border: 1px solid #bbb;
+  border: 1px solid #ddd;
   border-right: none;
   padding: 8px;
+  text-align: center;
+  transition: all .2s linear;
 }
 
 .toggle-button input:first-child + label[for] {
@@ -84,12 +87,20 @@ textarea {
 
 .toggle-button input:checked + label {
   font-weight: bold;
-  background: #333;
-  color: #eee;
+  background: #ddd;
+}
+
+.toggle-collection {
+  display: flex;
+  justify-content: space-between;
+}
+
+.toggle-collection .toggle-button {
+  flex: 0 1 45%;
 }
 
 .preview-container {
-  flex: 1 1 50%;
+  flex: 1 1 70%;
   display: flex;
   flex-direction: column;
   align-items: center;
