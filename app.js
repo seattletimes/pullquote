@@ -27,17 +27,22 @@ var sizes = {
 
 var getSettings = function() {
   var settings = {};
-  var inputs = document.querySelectorAll("input, select");
+  var inputs = document.querySelectorAll("input[type=text], input[type=number], select");
   for (var i = 0; i < inputs.length; i++) {
     var input = inputs[i];
     settings[input.id] = input.value;
   }
+  var checkboxes = document.querySelectorAll("input:checked");
+  for (var i = 0; i < checkboxes.length; i++) {
+    var box = checkboxes[i];
+    settings[box.name] = box.value;
+  }
+  settings.size *= 1;
   return settings;
 }
 
 var render = function() {
   var settings = getSettings();
-  console.log(settings);
   document.querySelector(".preview-aspect").setAttribute("aspect-ratio", settings.aspect);
   var size = sizes[settings.aspect];
   canvas.width = size[0];

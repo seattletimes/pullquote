@@ -58,6 +58,36 @@ textarea {
   text-align: center;
 }
 
+.toggle-button {
+  display: flex;
+  border-bottom: none;
+}
+
+.toggle-button input {
+  display: none;
+}
+
+.toggle-button label[for] {
+  border: 1px solid #bbb;
+  border-right: none;
+  padding: 8px;
+}
+
+.toggle-button input:first-child + label[for] {
+  border-radius: 4px 0 0 4px;
+}
+
+.toggle-button label[for]:last-child {
+  border-right: 1px solid #bbb;
+  border-radius: 0 4px 4px 0;
+}
+
+.toggle-button input:checked + label {
+  font-weight: bold;
+  background: #333;
+  color: #eee;
+}
+
 .preview-container {
   flex: 1 1 50%;
   display: flex;
