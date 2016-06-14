@@ -7,17 +7,21 @@ var download = document.querySelector("a.download");
 var textarea = document.querySelector("textarea");
 textarea.value = textarea.value.trim();
 
+var state = {};
+
 var bg = {
   light: "#eee",
   dark: "#333",
-  blue: "#88b"
+  blue: "#335"
 };
 
 var fg = {
   light: "#333",
   dark: "#eee",
-  blue: "#eee"
+  blue: "#ddf"
 };
+
+var padding = 24;
 
 var sizes = {
   facebook: [1200, 630],
@@ -73,13 +77,27 @@ var layoutText = function(text, maxWidth) {
   if (buffer) {
     lines.push({ text: buffer, width: context.measureText(buffer).width });
   }
-  console.log(lines);
   return lines;
+};
+
+var loadImage = function(f) {
+  if (!f.name.match(/(jpg|jpeg|png|gif)$/)) return;
+  var reader = new FileReader();
+  reader.onload = function() {
+    console.log(`Read image: ${f.name}`);
+    state.image = new Image();
+    state.image.onload = render;
+    state.image.src = reader.result;
+  }
+  reader.readAsDataURL(f);
+}
+
+var drawImage = function() {
+  context.drawImage(state.image, 0, 0, canvas.width, canvas.height);
 };
 
 var render = function() {
   var settings = getSettings();
-  document.querySelector(".preview-aspect").setAttribute("aspect-ratio", settings.aspect);
   var size = sizes[settings.aspect];
   canvas.width = size[0];
   canvas.height = size[1];
@@ -92,6 +110,8 @@ var render = function() {
   //set the background color
   context.fillStyle = bg[settings.theme] || bg.light;
   context.fillRect(0, 0, canvas.width, canvas.height);
+  //add the image
+  if (state.image) drawImage();
   //lay out the text
   context.fillStyle = fg[settings.theme] || fg.light;
   context.font = `${settings.size}px ${settings.font}`;
@@ -125,9 +145,30 @@ for (var i = 0; i < everything.length; i++) {
   var element = everything[i];
   element.addEventListener("change", render);
   element.addEventListener("keyup", render);
-}
+};
 
-canvas.addEventListener("click", () => download.click());
+var cancel = function(e) { e.preventDefault() };
 
-var bodyMutation = new MutationObserver(render);
-// bodyMutation.observe(document.body, { attributes: true });
+canvas.addEventListener("dragenter", cancel);
+canvas.addEventListener("dragover", cancel);
+canvas.addEventListener("drop", function(e) {
+  e.preventDefault();
+  if (!e.dataTransfer || !e.dataTransfer.files) return;
+  var f = e.dataTransfer.files[0];
+  loadImage(f);
+});
+
+var fileInput = document.querySelector("#file");
+fileInput.addEventListener("change", function() {
+  var f = fileInput.files[0];
+  loadImage(f);
+});
+
+document.querySelector(".set-image").addEventListener("click", function() {
+  if (state.image) {
+    state.image = null;
+    render();
+  } else {
+    fileInput.click();
+  }
+});
