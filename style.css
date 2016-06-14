@@ -18,7 +18,7 @@ body {
 .row {
   display: flex;
   height: 50%;
-  flex: 1 0 30%;
+  flex: 1 0 50%;
 }
 
 .row textarea, .row .formatting {
