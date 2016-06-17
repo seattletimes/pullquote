@@ -12,13 +12,15 @@ var state = {};
 var bg = {
   light: "#eee",
   dark: "#333",
-  blue: "#335"
+  blue: "#335",
+  black: "black"
 };
 
 var fg = {
   light: "#333",
   dark: "#eee",
-  blue: "#ddf"
+  blue: "#ddf",
+  black: "#eee"
 };
 
 var padding = 24;
