@@ -7,7 +7,17 @@ var download = document.querySelector("a.download");
 var textarea = document.querySelector("textarea");
 textarea.value = textarea.value.trim();
 
-var state = {};
+var bug = new Image();
+bug.src = "ST.svg";
+bug.width = 100;
+bug.height = 100;
+bug.onload = function() {
+  render();
+}
+
+var state = {
+  bug: "top left"
+};
 
 var bg = {
   light: "#eee",
@@ -112,6 +122,19 @@ var drawImage = function() {
   context.drawImage(state.image, x, y, state.width, state.height);
 };
 
+var drawBug = function() {
+  var x = 0;
+  var y = 0;
+  bug.width = bug.height = canvas.width / 10;
+  if (state.bug.indexOf("bottom") > -1) {
+    y = canvas.height - bug.height;
+  }
+  if (state.bug.indexOf("right") > -1) {
+    x = canvas.width - bug.width;
+  }
+  context.drawImage(bug, x, y, bug.width, bug.height);
+};
+
 var render = function() {
   var settings = getSettings();
   var size = sizes[settings.aspect];
@@ -123,17 +146,24 @@ var render = function() {
     .replace(/"(\w)/g, "“$1")
     .replace(/(\S)"/g, "$1”")
     .replace(/--/g, "—");
+  
   //set the background color
   context.fillStyle = bg[settings.theme] || bg.light;
   context.fillRect(0, 0, canvas.width, canvas.height);
+
   //add the image
   if (state.image) drawImage(state.image);
+  //add the bug
+  drawBug();
+  
   //lay out the text
   context.fillStyle = fg[settings.theme] || fg.light;
   context.font = `${settings.size}px ${settings.font}`;
   var padding = 24;
   var maxWidth = canvas.width - padding * 2;
   var lines = layoutText(text, maxWidth);
+  
+  //draw the text
   var lineY = padding + canvas.height / 2 + settings.size / 2 - lines.length / 2 * settings.size;
   if (settings.alignY == "top") {
     lineY = padding + settings.size;
@@ -195,17 +225,30 @@ document.querySelector(".set-image").addEventListener("click", function() {
 
 canvas.addEventListener("mousedown", function(e) {
   state.coords = [e.clientX, e.clientY];
+  state.moved = false;
 });
 
 canvas.addEventListener("mousemove", function(e) {
   if (!state.coords) return;
-  state.cx += e.clientX - state.coords[0];
-  state.cy += e.clientY - state.coords[1];
+  var dx = e.clientX - state.coords[0];
+  var dy = e.clientY - state.coords[1]
+  state.cx += dx;
+  state.cy += dy;
+  if (Math.abs(dx) > 3 || Math.abs(dy) > 3) state.moved = true;
   state.coords = [e.clientX, e.clientY];
   render();
 });
 
 canvas.addEventListener("mouseup", function(e) {
+  if (!state.moved) {
+    var bounds = canvas.getBoundingClientRect();
+    var x = state.coords[0] - bounds.left;
+    var y = state.coords[1] - bounds.top;
+    state.bug = x < canvas.width / 2 ? "left " : "right ";
+    state.bug += y < canvas.height / 2 ? "top" : "bottom";
+    render()
+  }
+  state.moved = false;
   state.coords = null;
 });
 
