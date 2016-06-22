@@ -33,8 +33,6 @@ var fg = {
   black: "#eee"
 };
 
-var padding = 24;
-
 var sizes = {
   facebook: [1200, 630],
   twitter: [1024, 512],
@@ -54,6 +52,7 @@ var getSettings = function() {
     settings[box.name] = box.value;
   }
   settings.size *= 1;
+  settings.padding *= 1;
   return settings;
 };
 
@@ -159,12 +158,12 @@ var render = function() {
   //lay out the text
   context.fillStyle = fg[settings.theme] || fg.light;
   context.font = `${settings.size}px ${settings.font}`;
-  var padding = 24;
+  var padding = settings.padding;
   var maxWidth = canvas.width - padding * 2;
   var lines = layoutText(text, maxWidth);
   
   //draw the text
-  var lineY = padding + canvas.height / 2 + settings.size / 2 - lines.length / 2 * settings.size;
+  var lineY = canvas.height / 2 + settings.size / 2 - lines.length / 2 * settings.size;
   if (settings.alignY == "top") {
     lineY = padding + settings.size;
   } else if (settings.alignY == "bottom") {
