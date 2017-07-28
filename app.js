@@ -41,7 +41,7 @@ var sizes = {
 
 var getSettings = function() {
   var settings = {};
-  var inputs = document.querySelectorAll("input[type=text], input[type=number], select");
+  var inputs = document.querySelectorAll("input[type=text], input[type=number], input[type=range], select");
   for (var i = 0; i < inputs.length; i++) {
     var input = inputs[i];
     settings[input.id] = input.value;
@@ -115,10 +115,12 @@ var loadImage = function(f) {
   reader.readAsDataURL(f);
 }
 
-var drawImage = function() {
+var drawImage = function(opacity) {
   var x = state.cx - state.width / 2;
   var y = state.cy - state.height / 2;
+  context.globalAlpha = opacity;
   context.drawImage(state.image, x, y, state.width, state.height);
+  context.globalAlpha = 1;
 };
 
 var drawBug = function() {
@@ -151,7 +153,7 @@ var render = function() {
   context.fillRect(0, 0, canvas.width, canvas.height);
 
   //add the image
-  if (state.image) drawImage(state.image);
+  if (state.image) drawImage(settings.opacity);
   //add the bug
   drawBug();
   
