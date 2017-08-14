@@ -177,7 +177,7 @@ var render = function() {
     attrLines.forEach(l => l.alignment = "right");
     lines = lines.concat(attrLines);
   }
-  var height = lines.reduce((t, l) => t + l.size, 0);
+  var height = lines.reduce((t, l) => t + l.size * 1.2, 0);
   
   //draw the text
   var lineY = canvas.height / 2 - height / 2 + settings.size / 2;
@@ -197,7 +197,7 @@ var render = function() {
     context.textAlign = alignment;
     context.font = `${l.size}px ${settings.font}`;
     context.fillText(l.text, x, lineY);
-    lineY += l.size;
+    lineY += l.size * 1.2;
   });
 };
 
