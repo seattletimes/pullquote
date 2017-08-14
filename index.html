@@ -19,10 +19,12 @@
   </head>
   <body>
     <div class="row">
-      <textarea class="input">
-"This space intentionally left blank."
-  -- Thomas Wilburn
-      </textarea>
+      <div class="text-inputs">
+        <textarea class="quote">
+  "This space intentionally left blank."
+        </textarea>
+        <input class="attribution" value="Thomas Wilburn">
+      </div>
       <div class="formatting">
         <div class="setting toggle-button">
           <input type="radio" name="aspect" value="facebook" id="facebook" checked="checked">
@@ -72,8 +74,10 @@
         <div class="setting">
           <label for="padding">Padding</label>
           <input type="number" id="padding" value="24">
-          <label for="size">Font size</label>
+          <label for="size">Quote size</label>
           <input type="number" id="size" value="72">
+          <label for="attributionSize">Attribution</label>
+          <input type="number" id="attributionSize" value="48">
         </div>
         <div class="setting">
           <label for="opacity">Image opacity</label>

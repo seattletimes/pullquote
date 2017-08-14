@@ -21,16 +21,31 @@ body {
   flex: 1 0 50%;
 }
 
-.row textarea, .row .formatting {
+.row .text-inputs, .row .formatting {
   flex: 1 1 50%;
 }
 
-textarea {
+.text-inputs {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: stretch;
+}
+
+textarea.quote {
   border: none;
   background: radial-gradient(white, #eee);
   font-size: 24px;
   padding: 8px;
   resize: none;
+  flex: 1 0 80%;
+}
+
+input.attribution {
+  width: 100%;
+  border: 1px solid #DDD;
+  padding: 8px;
+  font-size: 25px;
 }
 
 .formatting {
