@@ -156,6 +156,7 @@ var render = function() {
     .replace(/"(\w)/g, "“$1")
     .replace(/(\S)"/g, "$1”")
     .replace(/--/g, "—");
+  var attr = attribution.value.trim();
   
   //set the background color
   context.fillStyle = bg[settings.theme] || bg.light;
@@ -171,9 +172,11 @@ var render = function() {
   var padding = settings.padding;
   var maxWidth = canvas.width - padding * 2;
   var lines = layoutText(text, maxWidth, settings.font, settings.size);
-  var attrLines = layoutText("    — " + attribution.value.trim(), maxWidth, settings.font, settings.attributionSize);
-  attrLines.forEach(l => l.alignment = "right");
-  lines = lines.concat(attrLines);
+  if (attr) {
+    var attrLines = layoutText("    — " + attr, maxWidth, settings.font, settings.attributionSize);
+    attrLines.forEach(l => l.alignment = "right");
+    lines = lines.concat(attrLines);
+  }
   var height = lines.reduce((t, l) => t + l.size, 0);
   
   //draw the text
