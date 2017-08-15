@@ -7,7 +7,7 @@ var formatting = document.querySelector(".formatting");
 var download = document.querySelector("a.download");
 var textarea = document.querySelector("textarea.quote");
 textarea.value = textarea.value.trim();
-var attribution = document.querySelector("input.attribution")
+var attribution = document.querySelector("input.attribution");
 
 var bug = new Image();
 bug.src = "ST.svg";
@@ -15,7 +15,7 @@ bug.width = 100;
 bug.height = 100;
 bug.onload = function() {
   render();
-}
+};
 
 var state = {
   bug: "top left"
@@ -280,4 +280,4 @@ canvas.addEventListener("wheel", function(e) {
   state.width *= scale;
   state.height *= scale;
   render();
-})
+});
